@@ -18,6 +18,8 @@ mongodb.MongoClient.connect(process.env.MONGODB_URI || "mongodb://localhost:2701
     process.exit(1);
   }
 
+  { useNewUrlParser: true }
+
   // Save database object from the callback for reuse.
   db = client.db();
   console.log("Database connection ready");
@@ -42,7 +44,7 @@ function handleError(res, reason, message, code) {
  *    POST: creates a new contact
  */
 
-app.get("/api/contacts", => () (req, res) {
+app.get("/api/contacts", function(req, res) {
   db.collection(CONTACTS_COLLECTION).find({}).toArray(function(err, docs) {
     if (err) {
       handleError(res, err.message, "Failed to get contacts.");
@@ -52,7 +54,7 @@ app.get("/api/contacts", => () (req, res) {
   });
 });
 
-app.post("/api/contacts", => () (req, res) {
+app.post("/api/contacts", function(req, res) {
   var newContact = req.body;
   newContact.createDate = new Date();
 
@@ -75,11 +77,11 @@ app.post("/api/contacts", => () (req, res) {
  *  DELETE: deletes contact by id
  */
 
-app.get("/api/contacts/:id", => () (req, res) {
+app.get("/api/contacts/:id", function(req, res) {
 });
 
-app.put("/api/contacts/:id", => () (req, res) {
+app.put("/api/contacts/:id", function(req, res) {
 });
 
-app.delete("/api/contacts/:id", => () (req, res) {
+app.delete("/api/contacts/:id", function(req, res) {
 });
