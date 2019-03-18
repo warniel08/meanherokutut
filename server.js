@@ -2,6 +2,7 @@ var express = require("express");
 var bodyParser = require("body-parser");
 var mongodb = require("mongodb");
 var ObjectID = mongodb.ObjectID;
+const util = require('util');
 
 var CONTACTS_COLLECTION = "contacts";
 
@@ -61,6 +62,7 @@ app.post("/api/contacts", function(req, res) {
   newContact.createDate = new Date();
 
   if (!req.body.name) {
+    console.log(`post/${util.inspect(req.body,false,null)}`);
     handleError(res, "Invalid user input", "Must provide a name.", 400);
   } else {
     db.collection(CONTACTS_COLLECTION).insertOne(newContact, function(err, doc) {
